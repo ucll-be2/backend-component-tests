@@ -14,33 +14,39 @@ import org.springframework.test.json.JsonCompareMode;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql("classpath:schema.sql")
-@ActiveProfiles("test")
+@Sql("classpath:schema.sql") // schema.sql reset database bij elke test
+@ActiveProfiles("test") // gebruik test profile
 public class ActorComponentTest {
 
     @Autowired
-    private WebTestClient client;
+    private WebTestClient client; // Client om requests uit te voeren
 
     @Autowired
-    private EntityManager em;
+    private EntityManager em; // Gebruik een échte EntityManager
 
     @Autowired
     private DbInitializer dbInitializer;
 
     @BeforeEach
     public void addTestData() {
+        // Zet voor elke test testdata in de DB
         dbInitializer.initialize();
     }
 
     @Test
     public void givenActorWithIdExists_whenDeleteActorIsCalled_thenActorIsDeleted() {
+        // Kijk na dat we vooraf wél een acteur in de DB hebben
+        final var actorBefore = em.find(Actor.class, 1L);
+        Assertions.assertNotNull(actorBefore);
+
         client.delete()
                 .uri("/api/v1/actors/{id}", 1L)
                 .exchange()
                 .expectStatus().isNoContent();
 
-        final var actorInDB = em.find(Actor.class, 1L);
-        Assertions.assertNull(actorInDB);
+        // Kijk na dat we nu geen acteur met ID 1 meer kunnen vinden
+        final var actorAfter = em.find(Actor.class, 1L);
+        Assertions.assertNull(actorAfter);
     }
 
     @Test

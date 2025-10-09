@@ -17,7 +17,7 @@ public class DbInitializer {
     }
 
     @PostConstruct
-    @Profile("!test")
+    @Profile("!test") // Doe enkel de initiële initialize als we niet test profile gebruiken
     public void initialize() {
         var frances = new Actor("Frances McDormand");
         var steve = new Actor("Steve Buscemi");
