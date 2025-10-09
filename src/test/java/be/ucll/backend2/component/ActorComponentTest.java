@@ -1,6 +1,5 @@
 package be.ucll.backend2.component;
 
-import be.ucll.backend2.exception.ActorNotFoundException;
 import be.ucll.backend2.model.Actor;
 import be.ucll.backend2.repository.DbInitializer;
 import jakarta.persistence.EntityManager;
@@ -34,8 +33,7 @@ public class ActorComponentTest {
     }
 
     @Test
-    public void givenActorWithIdExists_whenDeleteActorIsCalled_thenActorIsDeleted()
-            throws ActorNotFoundException {
+    public void givenActorWithIdExists_whenDeleteActorIsCalled_thenActorIsDeleted() {
         client.delete()
                 .uri("/api/v1/actors/{id}", 1L)
                 .exchange()

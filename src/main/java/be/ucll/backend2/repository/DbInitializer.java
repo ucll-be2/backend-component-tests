@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DbInitializer {
-    private ActorRepository actorRepository;
-    private MovieRepository movieRepository;
+    private final ActorRepository actorRepository;
+    private final MovieRepository movieRepository;
 
     public DbInitializer(ActorRepository actorRepository, MovieRepository movieRepository) {
         this.actorRepository = actorRepository;
