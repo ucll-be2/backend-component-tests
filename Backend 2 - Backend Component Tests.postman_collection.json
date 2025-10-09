@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "180cf769-7e7f-4900-a82d-93f874c2c53f",
-		"name": "Backend 2 - HTTP Integration Tests",
+		"_postman_id": "25ebbc4d-bf6f-468d-84ad-d3ce4ba167a8",
+		"name": "Backend 2 - Backend Component Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30232115"
 	},
