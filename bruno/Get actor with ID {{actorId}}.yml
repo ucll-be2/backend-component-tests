@@ -1,0 +1,20 @@
+info:
+  name: Get actor with ID {{actorId}}
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/actors/:actorId"
+  params:
+    - name: actorId
+      value: "{{actorId}}"
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

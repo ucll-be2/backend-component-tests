@@ -1,0 +1,27 @@
+info:
+  name: Update actor with ID {{actorId}}
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/actors/:actorId"
+  params:
+    - name: actorId
+      value: "{{actorId}}"
+      type: path
+  body:
+    type: json
+    data: "{\r
+
+      \    \"name\": \"Clement Peerens\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

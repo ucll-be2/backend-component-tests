@@ -1,0 +1,35 @@
+info:
+  name: Create new actor
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/v1/actors"
+  body:
+    type: json
+    data: "{\r
+
+      \    \"name\": \"Jos Bosmans\"\r
+
+      }"
+  auth: inherit
+
+runtime:
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.id
+        method: jsonq
+      variable:
+        name: actorId
+        scope: runtime
+      description: Set actorId var
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
