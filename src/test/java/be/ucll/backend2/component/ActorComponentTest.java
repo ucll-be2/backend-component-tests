@@ -7,19 +7,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.json.JsonCompareMode;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.client.RestTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureRestTestClient
 @Sql("classpath:schema.sql") // schema.sql reset database bij elke test
 @ActiveProfiles("test") // gebruik test profile
 public class ActorComponentTest {
 
     @Autowired
-    private WebTestClient client; // Client om requests uit te voeren
+    private RestTestClient client; // Client om requests uit te voeren
 
     @Autowired
     private EntityManager em; // Gebruik een échte EntityManager
