@@ -3,7 +3,6 @@ package be.ucll.backend2.repository;
 import be.ucll.backend2.model.Actor;
 import be.ucll.backend2.model.Movie;
 import jakarta.annotation.PostConstruct;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +16,6 @@ public class DbInitializer {
     }
 
     @PostConstruct
-    @Profile("!test") // Doe enkel de initiële initialize als we niet test profile gebruiken
     public void initialize() {
         var frances = new Actor("Frances McDormand");
         var steve = new Actor("Steve Buscemi");
