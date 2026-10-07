@@ -1,8 +1,8 @@
 package be.ucll.backend2.component;
 
 import be.ucll.backend2.model.Actor;
+import be.ucll.backend2.repository.ActorRepository;
 import be.ucll.backend2.repository.DbInitializer;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.json.JsonCompareMode;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
+import java.util.Optional;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestTestClient
 @Sql("classpath:schema.sql") // schema.sql reset database bij elke test
@@ -22,7 +24,7 @@ public class ActorComponentTest {
     private RestTestClient client; // Client om requests uit te voeren
 
     @Autowired
-    private EntityManager em; // Gebruik een échte EntityManager
+    private ActorRepository actorRepository;
 
     @Autowired
     private DbInitializer dbInitializer;
@@ -36,8 +38,8 @@ public class ActorComponentTest {
     @Test
     public void givenActorWithIdExists_whenDeleteActorIsCalled_thenActorIsDeleted() {
         // Kijk na dat we vooraf wél een acteur in de DB hebben
-        final var actorBefore = em.find(Actor.class, 1L);
-        Assertions.assertNotNull(actorBefore);
+        final Optional<Actor> actorBefore = actorRepository.findById(1L);
+        Assertions.assertTrue(actorBefore.isPresent());
 
         client.delete()
                 .uri("/api/v1/actors/{id}", 1L)
@@ -45,8 +47,8 @@ public class ActorComponentTest {
                 .expectStatus().isNoContent();
 
         // Kijk na dat we nu geen acteur met ID 1 meer kunnen vinden
-        final var actorAfter = em.find(Actor.class, 1L);
-        Assertions.assertNull(actorAfter);
+        final Optional<Actor> actorAfter = actorRepository.findById(1L);
+        Assertions.assertTrue(actorAfter.isEmpty());
     }
 
     @Test
